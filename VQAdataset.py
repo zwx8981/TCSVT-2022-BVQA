@@ -32,7 +32,7 @@ class VQADataset(Dataset):
             elif status == 'val':
                 index = index[int(args.train_ratio * len(index)):int((0.5 + args.train_ratio / 2) * len(index))]
             elif status == 'test':
-                    index = index[int((0.5 + args.train_ratio / 2) * len(index)):len(index)]
+                index = index[int((0.5 + args.train_ratio / 2) * len(index)):len(index)]
             self.index[dataset] = []
             for i in range(len(ref_ids)):
                 if ref_ids[i] in index:
@@ -42,6 +42,7 @@ class VQADataset(Dataset):
             print(index.astype(int))
 
         max_len_all = max(max_len.values())
+        # max_len_all = 2000
         self.features, self.length, self.label, self.KCL, self.N = dict(), dict(), dict(), dict(), dict()
         for dataset in datasets:
             N = len(self.index[dataset])
@@ -51,12 +52,48 @@ class VQADataset(Dataset):
             self.label[dataset] = np.zeros((N, 1), dtype=np.float32)
             self.KCL[dataset] = []
             for i in range(N):
-                features = np.load(args.features_dir[dataset] + str(self.index[dataset][i]) + '_' + args.feature_extractor +'_last_conv.npy')
-                self.length[dataset][i] = features.shape[0]
-                self.features[dataset][i, :features.shape[0], :] = features
-                mos = np.load(args.features_dir[dataset] + str(self.index[dataset][i]) + '_score.npy')  #
+                # features = np.load(args.features_dir[dataset] + str(self.index[dataset][i]) + '_' + 'SpatialMotion' + '_last_conv.npy')
+
+                features_img = np.load('/home/user/Documents/New/MDTVSFA1/UNIQUEinthewildtrainResNet50lr1e-4_Features/' + args.features_dir[dataset] + str(
+                        self.index[dataset][i]) + '_' + 'UNIQUE' + '_last_conv.npy')
+
+                frame_start = 0
+                frame_end = frame_start + 64
+                num_block = 0
+                video_length = features_img.shape[0]
+
+                feature_fast_img = np.empty(shape=[0, 4096], dtype=np.float32)
+                while frame_end < video_length:
+                    batch = features_img[frame_start:frame_end, :]
+                    index = torch.linspace(0, 63, 32).long()
+                    batch = batch[index, :]
+
+                    feature_fast_img = np.concatenate((feature_fast_img, batch), 0)
+
+                    frame_end += 64
+                    frame_start += 64
+                    num_block = num_block + 1
+
+                last_batch = features_img[(video_length - 64):video_length]
+                index = torch.linspace(0, 63, 32).long()
+                last_batch_rindex_fast = (video_length - 64) + index
+
+                id = np.where(last_batch_rindex_fast >= 64 * num_block)
+
+                feature_fast_img = np.concatenate((feature_fast_img, last_batch[id[0], :]), 0)
+
+                feature_fast_video = np.load('/home/user/Documents/New/MDTVSFA1/SlowFast_Features_Allframes2/' + args.features_dir[dataset] + str(
+                    self.index[dataset][i]) + '_' + 'SFNet_fast' + '_last_conv.npy')
+
+                feature_fast = np.concatenate((feature_fast_img, feature_fast_video), axis=1)
+
+                self.features[dataset][i, :feature_fast.shape[0], :] = feature_fast
+
+                # self.features[dataset][i, :features.shape[0], :] = features
+                mos = np.load(args.features_dir[dataset] + str(self.index[dataset][i]) + '_score.npy')
                 self.label[dataset][i] = mos
                 self.KCL[dataset].append(dataset)
+                self.length[dataset][i] = feature_fast.shape[0] # features.shape[0]
 
     def __len__(self):
         return max(self.N.values())

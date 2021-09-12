@@ -39,7 +39,7 @@ class VideoDataset(Dataset):
         else:
             video_data = skvideo.io.vread(os.path.join(self.videos_dir, video_name))
             # DEBUG
-            video_data = video_data[0:22, :, :, :]
+            # video_data = video_data[0:22, :, :, :]
         video_score = self.score[idx]
 
         transform = transforms.Compose([
@@ -191,7 +191,7 @@ def get_features(video_data, frame_batch_size=64, model='ResNet-50', device='cud
 
     return output
 
-def comb_features(features1, features2, frame_batch_size=64):
+def comb_features(features1, features2, frame_batch_size=64, device='cuda'):
     """feature combination"""
     video_length = features1.shape[0]
     frame_start = 0
