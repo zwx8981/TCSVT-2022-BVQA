@@ -39,12 +39,14 @@ combine_train.m
 #### Training on multiple databases for 10 sessions
 python Main.py --train True --network basecnn --representation NOTBCNN --ranking True --fidelity True --std_modeling True --std_loss True --margin 0.025 --batch_size 128 --batch_size2 32 --image_size 384 --max_epochs 3 --lr 1e-4 --decay_interval 3 --decay_ratio 0.1 --max_epochs2 12 
 #### Feature extraction
+```bash
 CUDA_VISIBLE_DEVICES=0 python CNNfeatures.py --database=KoNViD-1k --frame_batch_size=64
 CUDA_VISIBLE_DEVICES=1 python CNNfeatures.py --database=CVD2014 --frame_batch_size=64
 CUDA_VISIBLE_DEVICES=0 python CNNfeatures.py --database=LIVE-Qualcomm --frame_batch_size=8
 CUDA_VISIBLE_DEVICES=1 python CNNfeatures.py --database=LIVE-VQC --frame_batch_size=8
 CUDA_VISIBLE_DEVICES=0 python CNNfeatures.py --database=YouTube-UGC --frame_batch_size=8
 CUDA_VISIBLE_DEVICES=1 python CNNfeatures.py --database=LSVQ --frame_batch_size=8
+```
 
 ## Motion Fearure: Transfer Knowledge from Motion Perception
 
