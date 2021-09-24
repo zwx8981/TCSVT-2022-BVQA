@@ -16,7 +16,7 @@ pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
 ```
 Note: Make sure that the CUDA version is consistent. If you have any installation problems, please find the details of error information in `*.log` file.
 
-## Download VQA Datasets
+## Download VQA datasets
 Download the [KoNViD-1k](http://database.mmsp-kn.de/konvid-1k-database.html), [CVD2014](https://www.mv.helsinki.fi/home/msjnuuti/CVD2014/), [LIVE-Qualcomm](http://live.ece.utexas.edu/research/incaptureDatabase/index.html), [LIVE-VQC](http://live.ece.utexas.edu/research/LIVEVQC/index.html), [YouTube-UGC](https://github.com/vztu/BVQA_Benchmark), and [LSVQ](https://github.com/baidut/PatchVQ) datasets. Then, run the following `ln` commands in the root of this project.
 
 ```bash
@@ -35,6 +35,10 @@ data_all.m
 combine_train.m  
 #### Training on multiple databases for 10 sessions
 python Main.py --train True --network basecnn --representation BCNN --ranking True --fidelity True --std_modeling True --std_loss True --margin 0.025 --batch_size 128 --batch_size2 32 --image_size 384 --max_epochs 3 --lr 1e-4 --decay_interval 3 --decay_ratio 0.1 --max_epochs2 12 
+
+
+## Motion Fearure: Transfer knowledge from motion perception
+python Main.py --train True --network basecnn --representation BCNN --ranking True --fidelity True --std_modeling True --std_loss True --margin 0.025 --batch_size 128 --batch_size2 32 --image_size 384 --max_epochs 3 --lr 1e-4 --decay_interval 3 --decay_ratio 0.1 --max_epochs2 12
 
 ### Training and Evaluating on Multiple Datasets
 
