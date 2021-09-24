@@ -21,6 +21,14 @@ pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
 ```
 Note: Make sure that the CUDA version is consistent. If you have any installation problems, please find the details of error information in `*.log` file.
 
+# Spatial Fearure: Transfer knowledge from quality-aware pre-training
+## Sampling image pairs from multiple databases
+data_all.m  
+## Combining the sampled pairs to form the training set
+combine_train.m  
+## Training on multiple databases for 10 sessions
+python Main.py --train True --network basecnn --representation BCNN --ranking True --fidelity True --std_modeling True --std_loss True --margin 0.025 --batch_size 128 --batch_size2 32 --image_size 384 --max_epochs 3 --lr 1e-4 --decay_interval 3 --decay_ratio 0.1 --max_epochs2 12 
+
 ### Download Datasets
 Download the [KoNViD-1k](http://database.mmsp-kn.de/konvid-1k-database.html), [CVD2014](https://www.mv.helsinki.fi/home/msjnuuti/CVD2014/) ([alternative link](https://zenodo.org/record/2646315#.X6OmVC-1H3Q)), [LIVE-Qualcomm](http://live.ece.utexas.edu/research/incaptureDatabase/index.html), and [LIVE-VQC](http://live.ece.utexas.edu/research/LIVEVQC/index.html) datasets. Then, run the following `ln` commands in the root of this project.
 
