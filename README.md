@@ -65,6 +65,11 @@ The model weights provided in `models/model` are the saved weights when best per
 python test_demo.py --model_path=models/model --video_path=data/test.mp4
 ```
 
+## Acknowledge
+
+This work is heavily inspired by [MDTVSFA] (https://github.com/lidq92/MDTVSFA).
+The model-based transfer learning for video features extraction using mainly follows the implementations of [UNIQUE - IQA domain] (https://github.com/zwx8981/UNIQUE) and [SlowFast - Action Recognition domain] (https://github.com/facebookresearch/SlowFast).
+
 ## Citation
 
 Should you find this repo useful to your research, we sincerely appreciate it if you cite our paper :blush: :
