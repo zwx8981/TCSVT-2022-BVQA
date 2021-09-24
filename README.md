@@ -15,8 +15,9 @@ pytorch 1.8.1
 pytorch-ignite 0.4.1
 torchsort 0.1.3
 torchvision 0.9.1
-Matlab
+Matlab R2020a
 Successfully tested on Ubuntu18.04.
+(Our machine is equipped with Intel Xeon(R) Gold 5220R CPU×2, and NVIDIA Quadro RTX6000 24G GPU×2.)
 ```
 
 ## Download VQA Databases
