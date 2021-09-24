@@ -24,6 +24,8 @@ ln -s KoNViD-1k_path KoNViD-1k # KoNViD-1k_path is your path to the KoNViD-1k da
 ln -s CVD2014_path CVD2014 # CVD2014_path is your path to the CVD2014 dataset
 ln -s LIVE-Qualcomm_path LIVE-Qualcomm # LIVE-Qualcomm_path is your path to the LIVE-Qualcomm dataset
 ln -s LIVE-VQC_path LIVE-VQC # LIVE-VQC_path is your path to the LIVE-VQC dataset
+ln -s YouTube-UGC_path YouTube-UGC # YouTube-UGC_path is your path to the YouTube-UGC dataset
+ln -s LSVQ_path LSVQ # LSVQ_path is your path to the LSVQ dataset
 ``` 
 
 ## Spatial Fearure: Transfer knowledge from quality-aware pre-training
