@@ -12,6 +12,7 @@ Source code for the following paper:
 conda create -n reproducibleresearch pip python=3.6
 source activate reproducibleresearch
 pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
+```
 
 ## Download VQA Databases
 Download the [KoNViD-1k](http://database.mmsp-kn.de/konvid-1k-database.html), [CVD2014](https://www.mv.helsinki.fi/home/msjnuuti/CVD2014/), [LIVE-Qualcomm](http://live.ece.utexas.edu/research/incaptureDatabase/index.html), [LIVE-VQC](http://live.ece.utexas.edu/research/LIVEVQC/index.html), [YouTube-UGC](https://github.com/vztu/BVQA_Benchmark), and [LSVQ](https://github.com/baidut/PatchVQ) datasets. Then, run the following `ln` commands in the root of this project.
@@ -48,7 +49,7 @@ CUDA_VISIBLE_DEVICES=1 python CNNfeatures.py --database=LSVQ --frame_batch_size=
 CUDA_VISIBLE_DEVICES=&gpu_id python CNNfeatures.py --database=&database --frame_batch_size=64
 
 
-### Training and Evaluating on VQA Databases
+## Training and Evaluating on VQA Databases
 
 ```bash
 # Training, under individual-dataset setting, for example 
@@ -57,7 +58,14 @@ python main.py --trained_datasets ['C'] --tested_datasets ['C']
 python main.py --trained_datasets ['K', 'C', 'L', 'N'] --tested_datasets ['K', 'C', 'L', 'N']
 ```
 
-### Test Demo
+## Test Demo
+
+The model weights provided in `models/model` are the saved weights when best performing on CVD2014.
+```bash
+python test_demo.py --model_path=models/model --video_path=data/test.mp4
+```
+
+## Citation
 
 Should you find this repo useful to your research, we sincerely appreciate it if you cite our paper `:blush:`:
 ```bash
