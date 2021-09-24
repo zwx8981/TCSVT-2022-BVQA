@@ -9,6 +9,7 @@ Source code for the following paper:
 # Usage
 ## Install Requirements
 
+```bash
 python 3.8.8
 pytorch 1.8.1
 pytorch-ignite 0.4.1
@@ -16,6 +17,7 @@ torchsort 0.1.3
 torchvision 0.9.1
 Matlab
 Successfully tested on Ubuntu18.04.
+```
 
 ## Download VQA Databases
 Download the [KoNViD-1k](http://database.mmsp-kn.de/konvid-1k-database.html), [CVD2014](https://www.mv.helsinki.fi/home/msjnuuti/CVD2014/), [LIVE-Qualcomm](http://live.ece.utexas.edu/research/incaptureDatabase/index.html), [LIVE-VQC](http://live.ece.utexas.edu/research/LIVEVQC/index.html), [YouTube-UGC](https://github.com/vztu/BVQA_Benchmark), and [LSVQ](https://github.com/baidut/PatchVQ) datasets. Then, run the following `ln` commands in the root of this project.
@@ -70,11 +72,11 @@ python test_demo.py --model_path=models/model --video_path=data/test.mp4
 
 ## Acknowledge
 
+```bash
 This work is heavily inspired by [MDTVSFA](https://github.com/lidq92/MDTVSFA) (Li et al., IJCV2021).
-
 The model-based transfer learning for video feature extraction mainly follows the implementations of [UNIQUE - IQA domain](https://github.com/zwx8981/UNIQUE) (Zhang et al., TIP2021) and [SlowFast - Action Recognition domain](https://github.com/facebookresearch/SlowFast) (Feichtenhofer et al., ICCV2019).
-
 Great appreciation for theit excellent works.
+```
 
 ## Citation
 
