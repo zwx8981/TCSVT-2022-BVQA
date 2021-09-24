@@ -8,10 +8,15 @@ Source code for the following paper:
 
 # Usage
 ## Install Requirements
+
 ```bash
-conda create -n reproducibleresearch pip python=3.6
-source activate reproducibleresearch
-pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
+python 3.8.8
+pytorch 1.8.1
+pytorch-ignite 0.4.1
+torchsort 0.1.3
+torchvision 0.9.1
+Matlab
+Successfully tested on Ubuntu18.04.
 ```
 
 ## Download VQA Databases
