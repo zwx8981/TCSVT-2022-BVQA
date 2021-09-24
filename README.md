@@ -67,7 +67,7 @@ python test_demo.py --model_path=models/model --video_path=data/test.mp4
 
 ## Citation
 
-Should you find this repo useful to your research, we sincerely appreciate it if you cite our paper `:blush:`:
+Should you find this repo useful to your research, we sincerely appreciate it if you cite our paper :blush::
 ```bash
 @article{li2021blindly,
   title={Blindly Assess Quality of In-the-Wild Videos via Quality-aware Pre-training and Motion Perception},
