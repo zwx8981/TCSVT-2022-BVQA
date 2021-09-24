@@ -1,14 +1,9 @@
-# 《Blindly Assess Quality of In-the-Wild Videos via Quality-aware Pre-training and Motion Perception》
-
-# Source code coming soon!
-
-# Unified Quality Assessment of In-the-Wild Videos with Mixed Datasets Training
-[![License](https://img.shields.io/github/license/mashape/apistatus.svg?maxAge=2592000)](License)
+# Blindly Assess Quality of In-the-Wild Videos via Quality-aware Pre-training and Motion Perception
 
 ## Description
-MDTVSFA code for the following paper:
+Source code for the following paper:
 
-- Dingquan Li, Tingting Jiang, and Ming Jiang. [Unified Quality Assessment of In-the-Wild Videos with Mixed Datasets Training](https://link.springer.com/article/10.1007%2Fs11263-020-01408-w). International Journal of Computer Vision (IJCV) Special Issue on Computer Vision in the Wild, 2021. [[arxiv version]](https://arxiv.org/abs/2011.04263)
+- Bowen Li, Weixia Zhang, Meng Tian, Guangtao Zhai, and Xianpei Wang. [Blindly Assess Quality of In-the-Wild Videos via Quality-aware Pre-training and Motion Perception] [[arxiv version]](https://arxiv.org/abs/2108.08505)
 ![Framework](Overall_Framework.png)
 
 ## How to?
