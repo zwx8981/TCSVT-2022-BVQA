@@ -29,7 +29,6 @@ ln -s LSVQ_path LSVQ # LSVQ_path is your path to the LSVQ dataset
 ``` 
 
 ## Spatial Fearure: Transfer knowledge from quality-aware pre-training
-```bash
 #### Sampling image pairs from multiple databases
 data_all.m  
 #### Combining the sampled pairs to form the training set
@@ -43,12 +42,11 @@ CUDA_VISIBLE_DEVICES=0 python CNNfeatures.py --database=LIVE-Qualcomm --frame_ba
 CUDA_VISIBLE_DEVICES=1 python CNNfeatures.py --database=LIVE-VQC --frame_batch_size=8
 CUDA_VISIBLE_DEVICES=0 python CNNfeatures.py --database=YouTube-UGC --frame_batch_size=8
 CUDA_VISIBLE_DEVICES=1 python CNNfeatures.py --database=LSVQ --frame_batch_size=8
-```
 
 ## Motion Fearure: Transfer knowledge from motion perception
 
 #### Prepare the pre-trained SlowFast model file in the directory of "./MotionExtractor/checkpoints/Kinetics/"
-[SlowFast_ModelParams](http://database.mmsp-kn.de/konvid-1k-database.html)
+[SlowFast_Model](https://dl.fbaipublicfiles.com/pyslowfast/model_zoo/kinetics400/SLOWFAST_8x8_R50.pkl)
 #### Feature extraction
 CUDA_VISIBLE_DEVICES=$gpu_id python CNNfeatures.py --database=$database --frame_batch_size=64
 
