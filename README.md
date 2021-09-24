@@ -67,8 +67,8 @@ python test_demo.py --model_path=models/model --video_path=data/test.mp4
 
 ## Acknowledge
 
-This work is heavily inspired by [MDTVSFA](https://github.com/lidq92/MDTVSFA).
-The model-based transfer learning for video features extraction using mainly follows the implementations of [UNIQUE - IQA domain](https://github.com/zwx8981/UNIQUE) and [SlowFast - Action Recognition domain](https://github.com/facebookresearch/SlowFast).
+This work is heavily inspired by [MDTVSFA](https://github.com/lidq92/MDTVSFA)(Li-IJCV2021).
+The model-based transfer learning for video features extraction using mainly follows the implementations of [UNIQUE - IQA domain](https://github.com/zwx8981/UNIQUE)(Zhang-TIP2021) and [SlowFast - Action Recognition domain](https://github.com/facebookresearch/SlowFast)(Feichtenhofer-ICCV2019).
 
 ## Citation
 
