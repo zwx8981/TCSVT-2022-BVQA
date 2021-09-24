@@ -48,7 +48,7 @@ CUDA_VISIBLE_DEVICES=1 python CNNfeatures.py --database=LSVQ --frame_batch_size=
 #### Prepare the pre-trained SlowFast model file in the directory of "./MotionExtractor/checkpoints/Kinetics/"
 [SlowFast_Model](https://dl.fbaipublicfiles.com/pyslowfast/model_zoo/kinetics400/SLOWFAST_8x8_R50.pkl)
 #### Feature extraction
-CUDA_VISIBLE_DEVICES=$gpu_id python CNNfeatures.py --database=$database --frame_batch_size=64
+CUDA_VISIBLE_DEVICES=&gpu_id python CNNfeatures.py --database=&database --frame_batch_size=64
 
 
 ### Training and Evaluating on Multiple Datasets
