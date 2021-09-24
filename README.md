@@ -47,8 +47,8 @@ CUDA_VISIBLE_DEVICES=1 python CNNfeatures.py --database=LSVQ --frame_batch_size=
 
 ## Motion Fearure: Transfer knowledge from motion perception
 ```bash
-#### Prepare pre-trained model file in directory "./MotionExtractor/checkpoints/Kinetics/"
-[SlowFast Params](http://database.mmsp-kn.de/konvid-1k-database.html)
+#### Prepare the pre-trained SlowFast model file in the directory of "./MotionExtractor/checkpoints/Kinetics/"
+[SlowFast_ModelParams](http://database.mmsp-kn.de/konvid-1k-database.html)
 #### Feature extraction
 CUDA_VISIBLE_DEVICES=$gpu_id python CNNfeatures.py --database=$database --frame_batch_size=64
 ```
