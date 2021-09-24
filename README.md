@@ -6,7 +6,7 @@ Source code for the following paper:
 - Bowen Li, Weixia Zhang, Meng Tian, Guangtao Zhai, and Xianpei Wang. [Blindly Assess Quality of In-the-Wild Videos via Quality-aware Pre-training and Motion Perception] [[arxiv version]](https://arxiv.org/abs/2108.08505)
 ![Framework](Overall_Framework.png)
 
-## How to?
+## Usage
 ### Install Requirements
 ```bash
 conda create -n reproducibleresearch pip python=3.6
