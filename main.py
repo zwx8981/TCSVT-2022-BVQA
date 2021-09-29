@@ -99,7 +99,7 @@ def run(args):
 
 if __name__ == "__main__":
     parser = ArgumentParser(description='Training for Quality Assessment of In-the-Wild Videos')
-    parser.add_argument("--seed", type=int, default=19920517)  # 19901116
+    parser.add_argument("--seed", type=int, default=19920517)
     parser.add_argument('--lr', type=float, default=5e-4,
                         help='learning rate (default: 5e-4)')
     parser.add_argument('--batch_size', type=int, default=32,
@@ -160,12 +160,14 @@ if __name__ == "__main__":
                          'C': 'CNN_features_CVD2014/',
                          'L': 'CNN_features_LIVE-Qualcomm/',
                          'N': 'CNN_features_LIVE-VQC/',
-                         'Y': 'CNN_features_YouTube_UGC/'}
+                         'Y': 'CNN_features_YouTube-UGC/',
+                         'Q': 'CNN_features_LSVQ/'}
     args.data_info = {'K': 'data/KoNViD-1kinfo.mat',
                       'C': 'data/CVD2014info.mat',
                       'L': 'data/LIVE-Qualcomminfo.mat',
                       'N': 'data/LIVE-VQCinfo.mat',
-                      'Y': 'data/YouTube_UGC_AirFlag_and_VIDEVAL_SEEDs.mat'}
+                      'Y': 'data/YouTube-UGC.mat',
+                      'Q': 'data/LSVQ.mat'}
 
     torch.manual_seed(args.seed)  #
     torch.backends.cudnn.deterministic = True

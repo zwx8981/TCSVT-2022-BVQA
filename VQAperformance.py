@@ -30,7 +30,6 @@ class VQAPerformance(Metric):
         KROCC = stats.stats.kendalltau(sq, rq)[0]
         PLCC = stats.pearsonr(sq, mq)[0]
         RMSE = np.sqrt(np.power(sq-aq, 2).mean())
-        # RMSE = np.sqrt(np.power(sq - mq, 2).mean())
         return {'SROCC': SROCC,
                 'KROCC': KROCC,
                 'PLCC': PLCC,

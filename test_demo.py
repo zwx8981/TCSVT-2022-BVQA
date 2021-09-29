@@ -2,15 +2,16 @@ import torch
 from torchvision import transforms
 import skvideo.io
 from PIL import Image
-from CNNfeatures import get_features, comb_features
+from CNNfeatures_Spatial import get_features as get_spatial_features
+from CNNfeatures_Motion import get_features as get_motion_features
+from CNNfeatures_Fusion import fuse_features
 from VQAmodel import VQAModel
 from argparse import ArgumentParser
 import time
 
-
 if __name__ == "__main__":
     parser = ArgumentParser(description='"Test Demo of MDTVSFA')
-    parser.add_argument('--model_path', default='models/model', type=str,
+    parser.add_argument('--model_path', default='models/model_C', type=str,
                         help='model path (default: models/model)')
     parser.add_argument('--video_path', default='data/test.mp4', type=str,
                         help='video path (default: data/test.mp4)')
@@ -22,7 +23,7 @@ if __name__ == "__main__":
                         help='video height')
     parser.add_argument('--frame_batch_size', type=int, default=64,
                         help='frame batch size for feature extraction (default: 64)')
-    parser.add_argument('--databases', type=str, default='C', help='C K L N Y Q')
+    parser.add_argument('--trained_datasets', nargs='+', type=str, default=['C'], help='C K L N Y Q')
     args = parser.parse_args()
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -55,19 +56,27 @@ if __name__ == "__main__":
     print('Video length: {}'.format(transformed_video.shape[0]))
 
     # feature extraction
-    spatial_features = get_features(transformed_video, frame_batch_size=args.frame_batch_size, model='SpatialExtractor', device=device)
-    motion_features = get_features(video_data, frame_batch_size=args.frame_batch_size, model='MotionExtractor', device=device)
-    features = comb_features(spatial_features, motion_features, args.frame_batch_size)
+    spatial_features = get_spatial_features(transformed_video, frame_batch_size=args.frame_batch_size, model='SpatialExtractor', device=device)
+    motion_features = get_motion_features(video_data, frame_batch_size=args.frame_batch_size, model='MotionExtractor', device=device)
+    features = fuse_features(spatial_features.to('cpu').numpy(), motion_features.to('cpu').numpy(), args.frame_batch_size)
+    features = torch.from_numpy(features).cuda()
     features = torch.unsqueeze(features, 0)  # batch size 1
 
+    # database initial
+    scale = dict()
+    m = dict()
+    for dataset in args.trained_datasets:
+        scale[dataset] = 1
+        m[dataset] = 0
+
     # quality prediction
-    model = VQAModel(scale={args.databases: 1}, m={args.databases: 0},).to(device)
-    model.load_state_dict(torch.load(args.model_path))  #
+    model = VQAModel(scale=scale, m=m).to(device)
+    model.load_state_dict(torch.load(args.model_path))
     model.eval()
 
     with torch.no_grad():
         input_length = features.shape[1] * torch.ones(1, 1, dtype=torch.long)
-        relative_score, mapped_score, aligned_score = model([(features, input_length, [args.databases])])
+        relative_score, mapped_score, aligned_score = model([(features, input_length, args.trained_datasets)])
         y_pred = mapped_score[0][0].to('cpu').numpy()
         print("Predicted perceptual quality: {}".format(y_pred))
 

@@ -73,20 +73,37 @@ CUDA_VISIBLE_DEVICES=1 python CNNfeatures_Spatial.py --database=LSVQ --frame_bat
 CUDA_VISIBLE_DEVICES=&gpu_id python CNNfeatures_Motion.py --database=&database --frame_batch_size=64
 ```
 
+## Final Fearure: Feature Fusion of Spatial and Motion Features
+```bash
+CUDA_VISIBLE_DEVICES=&gpu_id python CNNfeatures_Fusion.py --database=&database --frame_batch_size=64
+```
+
 ## Training and Evaluating on VQA Databases
 
 ```bash
 # Training, under individual-dataset setting, for example 
-python main.py --trained_datasets ['C'] --tested_datasets ['C']
+python main.py --trained_datasets C --tested_datasets C
 # Training, under mixed-database setting, for example
-python main.py --trained_datasets ['K', 'C', 'L', 'N'] --tested_datasets ['K', 'C', 'L', 'N']
+python main.py --trained_datasets K C L N --tested_datasets K C L N
+```
+
+## Analyse results
+
+```bash
+# Analysis, under individual-dataset setting, for example 
+python result_analysis.py --trained_datasets C --tested_datasets C
+# Analysis, under mixed-database setting, for example
+python result_analysis.py --trained_datasets K C L N --tested_datasets K C L N
 ```
 
 ## Test Demo
 
-The model weights provided in `models/model` are the saved weights when best performing on CVD2014.
+The model weights provided in `models/model_XXX` are the saved weights when best performing in training.
 ```bash
-python test_demo.py --model_path=models/model --video_path=data/test.mp4
+# Testing, under individual-dataset setting, for example 
+python test_demo.py --trained_datasets C --model_path models/model_C --video_path=data/test.mp4
+# Testing, under mixed-database setting, for example
+python test_demo.py --trained_datasets K C L N --model_path models/model_KCLN --video_path=data/test.mp4
 ```
 
 ## Acknowledgement

@@ -12,7 +12,6 @@ class VQALoss(nn.Module):
 
     def forward(self, y_pred, y):
         relative_score, mapped_score, aligned_score = y_pred
-        # relative_score, mapped_score = y_pred
         if self.loss_type == 'plcc':
             loss = [loss_accuracy(mapped_score[d], y[d]) for d in range(len(y))]
         elif self.loss_type == 'srcc':
@@ -21,7 +20,6 @@ class VQALoss(nn.Module):
             loss = [loss_accuracy(mapped_score[d], y[d]) + loss_monotonicity(relative_score[d], y[d]) for d in range(len(y))]
         else: # default l1
             loss = [F.l1_loss(aligned_score[d], y[d]) / self.scale[d] for d in range(len(y))]
-            # loss = [F.l1_loss(mapped_score[d], y[d]) / self.scale[d] for d in range(len(y))]
 
         sum_loss = sum([torch.exp(lossi) * lossi for lossi in loss]) / sum([torch.exp(lossi) for lossi in loss])
         return sum_loss

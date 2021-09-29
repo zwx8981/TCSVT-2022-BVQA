@@ -30,10 +30,6 @@ def fuse_features(features1, features2, frame_batch_size=64, device='cuda'):
             frame_start += frame_batch_size
             num_block = num_block + 1
 
-        # last_batch_index = ((video_length - frame_batch_size) + index)
-        # elements = last_batch_index[(last_batch_index >= frame_batch_size * num_block)]
-        # features = np.concatenate((features, features1[elements, :]), 0)
-
         last_batch_index = (video_length - frame_batch_size) + index
         elements = np.where(last_batch_index >= frame_batch_size * num_block)
         elements = elements[0] + (video_length - frame_batch_size)
@@ -45,7 +41,7 @@ def fuse_features(features1, features2, frame_batch_size=64, device='cuda'):
 
 if __name__ == "__main__":
     parser = ArgumentParser(description='Video Feature Fusion')
-    parser.add_argument("--seed", type=int, default=19920517)
+    parser.add_argument("--seed", type=int, default=19901116)
     parser.add_argument('--database', default='CVD2014', type=str,
                         help='database name (default: CVD2014)')
     parser.add_argument('--model', default='SpatialMotion', type=str,

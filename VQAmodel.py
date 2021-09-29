@@ -50,8 +50,6 @@ class VQAModel(nn.Module):
 
         return relative_score, mapped_score, aligned_score
 
-        # return relative_score, mapped_score
-
     def _sitp(self, q, tau=12, beta=0.5):
         """subjectively-inspired temporal pooling"""
         q = torch.unsqueeze(torch.t(q), 0)
