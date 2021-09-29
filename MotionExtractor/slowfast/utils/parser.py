@@ -50,8 +50,8 @@ def parse_args():
         "--cfg",
         dest="cfg_file",
         help="Path to the config file",
-        default="MotionExtractor/configs/Kinetics/SLOWFAST_8x8_R50.yaml",
-        type=str,
+        default="MotionExtractor/demo/Kinetics/SLOWFAST_8x8_R50.yaml", # "MotionExtractor/configs/Kinetics/SLOWFAST_8x8_R50.yaml",
+        type=str, # 'MotionExtractor/demo/Kinetics/SLOWFAST_8x8_R50.yaml'
     )
     parser.add_argument(
         "opts",
@@ -71,8 +71,8 @@ def parse_args():
         default="8",
         type=int,
     )
-    if len(sys.argv) == 1:
-        parser.print_help()
+    # if len(sys.argv) == 1:
+    #     parser.print_help()
     return parser.parse_args()
 
 

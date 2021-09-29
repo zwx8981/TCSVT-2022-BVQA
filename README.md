@@ -33,26 +33,35 @@ ln -s LSVQ_path LSVQ # LSVQ_path is your path to the LSVQ dataset
 ``` 
 
 ## Spatial Fearure: Transfer Knowledge from Quality-aware Pre-training
-#### Sampling image pairs from multiple databases
+#### Sampling image pairs from multiple IQA databases
 ```bash
-data_all.m  
+data_all_4inthewild.m
 ```
 #### Combining the sampled pairs to form the training set
 ```bash
-combine_train.m  
+combine_train_4inthewild.m
 ```
-#### Training on multiple databases for 10 sessions
+#### Training on multiple IQA databases for 10 sessions
 ```bash
+# Prepare source IQA databases
+ln -s /&source_root/BID/ImageDatabase /&tartget_root/BVQA-2021/SpatialExtractor/IQA_database/BID/ImageDatabase
+ln -s /&source_root/ChallengeDB_release/Images /&tartget_root/BVQA-2021/SpatialExtractor/IQA_database/ChallengeDB_release/Images
+ln -s /&source_root/koniq-10k/1024x768 /&tartget_root/BVQA-2021/SpatialExtractor/IQA_database/koniq-10k/1024x768
+ln -s /&source_root/SPAQ/TestImage /&tartget_root/BVQA-2021/SpatialExtractor/IQA_database/SPAQ/TestImage
+
+# Start Training
 python Main.py --train True --network basecnn --representation NOTBCNN --ranking True --fidelity True --std_modeling True --std_loss True --margin 0.025 --batch_size 128 --batch_size2 32 --image_size 384 --max_epochs 3 --lr 1e-4 --decay_interval 3 --decay_ratio 0.1 --max_epochs2 12
 ```
 #### Feature extraction
+Notice: Fisrt set the best model path you have trained in "get_spatialextractor_model.py". We provide a sample of pre-trained weights here:
+ 
 ```bash
-CUDA_VISIBLE_DEVICES=0 python CNNfeatures.py --database=KoNViD-1k --frame_batch_size=64
-CUDA_VISIBLE_DEVICES=1 python CNNfeatures.py --database=CVD2014 --frame_batch_size=64
-CUDA_VISIBLE_DEVICES=0 python CNNfeatures.py --database=LIVE-Qualcomm --frame_batch_size=8
-CUDA_VISIBLE_DEVICES=1 python CNNfeatures.py --database=LIVE-VQC --frame_batch_size=8
-CUDA_VISIBLE_DEVICES=0 python CNNfeatures.py --database=YouTube-UGC --frame_batch_size=8
-CUDA_VISIBLE_DEVICES=1 python CNNfeatures.py --database=LSVQ --frame_batch_size=8
+CUDA_VISIBLE_DEVICES=0 python CNNfeatures_Spatial.py --database=KoNViD-1k --frame_batch_size=64
+CUDA_VISIBLE_DEVICES=1 python CNNfeatures_Spatial.py --database=CVD2014 --frame_batch_size=64
+CUDA_VISIBLE_DEVICES=0 python CNNfeatures_Spatial.py --database=LIVE-Qualcomm --frame_batch_size=8
+CUDA_VISIBLE_DEVICES=1 python CNNfeatures_Spatial.py --database=LIVE-VQC --frame_batch_size=8
+CUDA_VISIBLE_DEVICES=0 python CNNfeatures_Spatial.py --database=YouTube-UGC --frame_batch_size=8
+CUDA_VISIBLE_DEVICES=1 python CNNfeatures_Spatial.py --database=LSVQ --frame_batch_size=8
 ```
 
 ## Motion Fearure: Transfer Knowledge from Motion Perception
@@ -61,7 +70,7 @@ CUDA_VISIBLE_DEVICES=1 python CNNfeatures.py --database=LSVQ --frame_batch_size=
 [SlowFast_Model](https://dl.fbaipublicfiles.com/pyslowfast/model_zoo/kinetics400/SLOWFAST_8x8_R50.pkl)
 #### Feature extraction
 ```bash
-CUDA_VISIBLE_DEVICES=&gpu_id python CNNfeatures.py --database=&database --frame_batch_size=64
+CUDA_VISIBLE_DEVICES=&gpu_id python CNNfeatures_Motion.py --database=&database --frame_batch_size=64
 ```
 
 ## Training and Evaluating on VQA Databases

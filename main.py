@@ -1,7 +1,3 @@
-# Date: 2021/09/06
-# source activate reproducibleresearch
-# tensorboard --logdir=runs --port=6006
-
 import torch
 from torch.optim import Adam, lr_scheduler
 from torch.utils.data import Dataset
@@ -102,10 +98,10 @@ def run(args):
 
 
 if __name__ == "__main__":
-    parser = ArgumentParser(description='Mixed Dataset Training for Quality Assessment of In-the-Wild Videos')
-    parser.add_argument("--seed", type=int, default=19920517)
+    parser = ArgumentParser(description='Training for Quality Assessment of In-the-Wild Videos')
+    parser.add_argument("--seed", type=int, default=19920517)  # 19901116
     parser.add_argument('--lr', type=float, default=5e-4,
-                        help='learning rate (default: 1e-4)')
+                        help='learning rate (default: 5e-4)')
     parser.add_argument('--batch_size', type=int, default=32,
                         help='input batch size for training (default: 32)')
     parser.add_argument('--epochs', type=int, default=40,
@@ -118,20 +114,20 @@ if __name__ == "__main__":
                         help='loss type (default: plcc+srcc)')
     parser.add_argument('--feature_extractor', default='SpatialMotion', type=str,
                         help='feature_extractor backbone (default: ResNet-50)')
-    # parser.add_argument('--feat_dim', type=int, default=4096,
-    #                     help='feature dimension (default: 4096)')
-    parser.add_argument('--trained_datasets', nargs='+', type=str, default=['C'], # default=['K', 'C', 'L', 'N']
-                        help="trained datasets (default: ['K', 'C', 'L', 'N'])")
-
-    parser.add_argument('--exp_id', default=0, type=int,
-                        help='exp id for train-val-test splits (default: 0)')
+    parser.add_argument('--trained_datasets', nargs='+', type=str, default=['C'],
+                        help="trained datasets (default: ['K', 'C', 'L', 'N', 'Y', 'Q'])")
+    parser.add_argument('--tested_datasets', nargs='+', type=str, default=['C'],
+                        help="tested datasets (default: ['K', 'C', 'L', 'N', 'Y', 'Q'])")
     parser.add_argument('--crop_length', type=int, default=180,
                         help='Crop video length (<=max_len=1202, default: 180)')
     parser.add_argument('--train_ratio', type=float, default=0.6,
                         help='train ratio (default: 0.6)')
-    parser.add_argument('--train_proportion', type=float, default=6,
-                        help='the number of proportions (#total 6) used in the training set (default: 6)')
-
+    parser.add_argument('--train_proportion', type=float, default=1.0,
+                        help='the proportion (#total 100%) used in the training set (default: 1.0)')
+    parser.add_argument('--start_exp_id', default=0, type=int,
+                        help='strat exp id for train-val-test splits (default: 0)')
+    parser.add_argument('--num_iters', type=int, default=10,
+                        help='the number of train-val-test iterations (default: 10)')
     parser.add_argument("--log_dir", type=str, default="runs",
                         help="log directory for Tensorboard log output")
     parser.add_argument('--disable_gpu', action='store_true',
@@ -139,7 +135,6 @@ if __name__ == "__main__":
     parser.add_argument('--inference', action='store_true',
                         help='Inference?')
     args = parser.parse_args()
-    args.train_proportion /= 6
     if args.feature_extractor == 'AlexNet':
         args.feat_dim = 256 * 2
     elif args.feature_extractor == 'ResNet-50':
@@ -160,7 +155,7 @@ if __name__ == "__main__":
 
     args.datasets = {'train': args.trained_datasets,
                      'val': args.trained_datasets,
-                     'test': ['C']} # ['K', 'C', 'L', 'N']}
+                     'test': args.tested_datasets}
     args.features_dir = {'K': 'CNN_features_KoNViD-1k/',
                          'C': 'CNN_features_CVD2014/',
                          'L': 'CNN_features_LIVE-Qualcomm/',
@@ -180,14 +175,13 @@ if __name__ == "__main__":
 
     torch.utils.backcompat.broadcast_warning.enabled = True
 
-    for i in range(0, 10):
+    for i in range(args.start_exp_id, args.num_iters):
         args.exp_id = i
-
         if not os.path.exists('checkpoints'):
             os.makedirs('checkpoints')
-        args.trained_model_file = 'checkpoints/{}-{}-{}-{}-{}-{}-{}-{}-EXP{}'.format(args.model, args.feature_extractor, args.loss, args.train_proportion, args.datasets['train'], args.lr, args.batch_size, args.epochs, args.exp_id)
+        args.trained_model_file = 'checkpoints/{}-{}-{}-{}-{}-{}-{}-{}-{}-EXP{}'.format(args.model, args.feature_extractor, args.loss, args.train_proportion, args.datasets['train'], args.datasets['test'], args.lr, args.batch_size, args.epochs, args.exp_id)
         if not os.path.exists('results'):
             os.makedirs('results')
-        args.save_result_file = 'results/{}-{}-{}-{}-{}-{}-{}-{}-EXP{}'.format(args.model, args.feature_extractor, args.loss, args.train_proportion, args.datasets['train'], args.lr, args.batch_size, args.epochs, args.exp_id)
+        args.save_result_file = 'results/{}-{}-{}-{}-{}-{}-{}-{}-{}-EXP{}'.format(args.model, args.feature_extractor, args.loss, args.train_proportion, args.datasets['train'], args.datasets['test'], args.lr, args.batch_size, args.epochs, args.exp_id)
         print(args)
         run(args)

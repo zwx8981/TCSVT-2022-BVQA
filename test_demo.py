@@ -2,7 +2,6 @@ import torch
 from torchvision import transforms
 import skvideo.io
 from PIL import Image
-import numpy as np
 from CNNfeatures import get_features, comb_features
 from VQAmodel import VQAModel
 from argparse import ArgumentParser

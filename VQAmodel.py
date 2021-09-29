@@ -4,17 +4,16 @@ import torch.nn.functional as F
 from collections import OrderedDict
 import numpy as np
 
-
 class VQAModel(nn.Module):
     def __init__(self, scale={'K': 1, 'C': 1, 'L': 1, 'N': 1}, m={'K': 0, 'C': 0, 'L': 0, 'N': 0},
-                 simple_linear_scale=False, input_size=4608, reduced_size=128, hidden_size=32):  # hidden_size=32 # input_size = 4096
+                 simple_linear_scale=False, input_size=4608, reduced_size=128, hidden_size=32):
         super(VQAModel, self).__init__()
         self.hidden_size = hidden_size
         mapping_datasets = scale.keys()
 
         self.dimemsion_reduction = nn.Linear(input_size, reduced_size)
         self.feature_aggregation = nn.GRU(reduced_size, hidden_size, batch_first=True)
-        self.regression = nn.Linear(hidden_size, 1)  # hidden_size
+        self.regression = nn.Linear(hidden_size, 1)
         self.bound = nn.Sigmoid()
         self.nlm = nn.Sequential(nn.Linear(1, 1), nn.Sigmoid(), nn.Linear(1, 1))  # 4 parameters
         self.lm = nn.Sequential(OrderedDict([(dataset, nn.Linear(1, 1)) for dataset in mapping_datasets]))
@@ -39,9 +38,9 @@ class VQAModel(nn.Module):
             x = self.dimemsion_reduction(x)  # dimension reduction
             x, _ = self.feature_aggregation(x, self._get_initial_state(x.size(0), x.device))
             q = self.regression(x)  # frame quality
-            relative_score.append(torch.zeros_like(q[:, 0]))  #
-            mapped_score.append(torch.zeros_like(q[:, 0]))  #
-            aligned_score.append(torch.zeros_like(q[:, 0]))  #
+            relative_score.append(torch.zeros_like(q[:, 0]))
+            mapped_score.append(torch.zeros_like(q[:, 0]))
+            aligned_score.append(torch.zeros_like(q[:, 0]))
             for i in range(q.shape[0]):
                 relative_score[d][i] = self._sitp(q[i, :x_len[i].item()])  # video overall quality
             relative_score[d] = self.bound(relative_score[d])
@@ -51,11 +50,13 @@ class VQAModel(nn.Module):
 
         return relative_score, mapped_score, aligned_score
 
+        # return relative_score, mapped_score
+
     def _sitp(self, q, tau=12, beta=0.5):
         """subjectively-inspired temporal pooling"""
         q = torch.unsqueeze(torch.t(q), 0)
         qm = -float('inf') * torch.ones((1, 1, tau - 1)).to(q.device)
-        qp = 10000.0 * torch.ones((1, 1, tau - 1)).to(q.device)  #
+        qp = 10000.0 * torch.ones((1, 1, tau - 1)).to(q.device)
         l = -F.max_pool1d(torch.cat((qm, -q), 2), tau, stride=1)
         m = F.avg_pool1d(torch.cat((q * torch.exp(-q), qp * torch.exp(-qp)), 2), tau, stride=1)
         n = F.avg_pool1d(torch.cat((torch.exp(-q), torch.exp(-qp)), 2), tau, stride=1)
