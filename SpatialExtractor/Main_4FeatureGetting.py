@@ -60,6 +60,9 @@ def parse_config():
     parser.add_argument("--database", type=str, default='KoNViD-1k')
     parser.add_argument("--frame_batch_size", type=int, default=64)
     parser.add_argument("--ith", type=int, default=0, help='start frame id')
+    parser.add_argument('--trained_datasets', nargs='+', type=str, default=['C'], help='C K L N Y Q')
+    parser.add_argument('--model_path', default='models/model_C', type=str, help='model path (default: models/model)')
+    parser.add_argument('--video_path', default='data/test.mp4', type=str, help='video path (default: data/test.mp4)')
 
     return parser.parse_args()
 

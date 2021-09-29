@@ -2,11 +2,9 @@ from ignite.metrics.metric import Metric
 import numpy as np
 from scipy import stats
 
-
 class VQAPerformance(Metric):
     """
     Evaluation of VQA methods using SROCC, KROCC, PLCC, RMSE.
-
     `update` must receive output of the form (y_pred, y).
     """
     def reset(self):
@@ -39,4 +37,5 @@ class VQAPerformance(Metric):
                 'sq': sq,
                 'rq': rq,
                 'mq': mq,
-                'aq': aq}
+                'aq': aq
+                }

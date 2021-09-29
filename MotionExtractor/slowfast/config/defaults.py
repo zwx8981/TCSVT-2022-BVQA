@@ -276,13 +276,13 @@ _C.DATA.NUM_FRAMES = 8
 _C.DATA.SAMPLING_RATE = 8
 
 # The mean value of the video raw pixels across the R G B channels.
-_C.DATA.MEAN = [0.45, 0.45, 0.45]
+_C.DATA.MEAN = [0.485, 0.456, 0.406]
 # List of input frame channel dimensions.
 
 _C.DATA.INPUT_CHANNEL_NUM = [3, 3]
 
 # The std value of the video raw pixels across the R G B channels.
-_C.DATA.STD = [0.225, 0.225, 0.225]
+_C.DATA.STD = [0.229, 0.224, 0.225]
 
 # The spatial augmentation jitter scales for training.
 _C.DATA.TRAIN_JITTER_SCALES = [256, 320]
