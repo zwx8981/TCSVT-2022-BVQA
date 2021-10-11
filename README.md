@@ -54,6 +54,8 @@ python Main.py --train True --network basecnn --representation NOTBCNN --ranking
 ```
 #### Feature extraction
 Notice: Fisrt set the best model path you have trained in "get_spatialextractor_model.py". We provide a sample of pre-trained weights here:
+
+Baidu Link: https://pan.baidu.com/s/1fakwlrv2pqRbMZLeRFRz9g   code: wk9r
  
 ```bash
 CUDA_VISIBLE_DEVICES=0 python CNNfeatures_Spatial.py --database=KoNViD-1k --frame_batch_size=64
