@@ -32,7 +32,7 @@ class VideoDataset(Dataset):
         video_name = self.video_names[idx]
         assert self.format == 'YUV420' or self.format == 'RGB'
         if self.format == 'YUV420':
-            video_data = skvideo.io.vread(os.path.join(self.videos_dir, video_name), self.height, self.width, inputdict={'-pix_fmt':'yuvj420p'})
+            video_data = skvideo.io.vread(os.path.join(self.videos_dir, video_name), self.height[idx], self.width[idx], inputdict={'-pix_fmt':'yuvj420p'})
         else:
             video_data = skvideo.io.vread(os.path.join(self.videos_dir, video_name))
         video_score = self.score[idx]
@@ -147,6 +147,14 @@ if __name__ == "__main__":
         videos_dir = 'LIVE-VQC/'
         features_dir = 'CNN_features_LIVE-VQC/SpatialFeature/'
         datainfo = 'data/LIVE-VQCinfo.mat'
+    if args.database == 'YouTube-UGC':
+        videos_dir = 'YouTube_UGC/'
+        features_dir = 'CNN_features_YouTube-UGC/SpatialFeature/'
+        datainfo = 'data/YouTube-UGCinfo.mat'
+    if args.database == 'LSVQ':
+        videos_dir = 'LSVQ/'
+        features_dir = 'CNN_features_LSVQ/SpatialFeature/'
+        datainfo = 'data/LSVQinfo.mat'
 
     if not os.path.exists(features_dir):
         os.makedirs(features_dir)
@@ -157,8 +165,8 @@ if __name__ == "__main__":
     video_names = [Info[Info['video_names'][0, :][i]][()].tobytes()[::2].decode() for i in range(len(Info['video_names'][0, :]))]
     scores = Info['scores'][0, :]
     video_format = Info['video_format'][()].tobytes()[::2].decode()
-    width = int(Info['width'][0])
-    height = int(Info['height'][0])
+    width = Info['widths'][0, :]
+    height = Info['heights'][0, :]
     dataset = VideoDataset(videos_dir, video_names, scores, video_format, width, height)
 
     max_len = 0

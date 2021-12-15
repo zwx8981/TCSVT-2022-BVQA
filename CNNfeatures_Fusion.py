@@ -30,9 +30,8 @@ def fuse_features(features1, features2, frame_batch_size=64, device='cuda'):
             frame_start += frame_batch_size
             num_block = num_block + 1
 
-        last_batch_index = (video_length - frame_batch_size) + index
-        elements = np.where(last_batch_index >= frame_batch_size * num_block)
-        elements = elements[0] + (video_length - frame_batch_size)
+        last_batch_index = ((video_length - frame_batch_size) + index)
+        elements = last_batch_index[(last_batch_index >= frame_batch_size * num_block)]
         features = np.concatenate((features, features1[elements, :]), 0)
 
     features = np.concatenate((features, features2), 1)
@@ -76,6 +75,14 @@ if __name__ == "__main__":
         videos_dir = 'LIVE-VQC/'
         features_dir = 'CNN_features_LIVE-VQC/'
         datainfo = 'data/LIVE-VQCinfo.mat'
+    if args.database == 'YouTube-UGC':
+        videos_dir = 'YouTube_UGC/'
+        features_dir = 'CNN_features_YouTube-UGC/'
+        datainfo = 'data/YouTube-UGCinfo.mat'
+    if args.database == 'LSVQ':
+        videos_dir = 'LSVQ/'
+        features_dir = 'CNN_features_LSVQ/'
+        datainfo = 'data/LSVQinfo.mat'
 
     if not os.path.exists(features_dir):
         os.makedirs(features_dir)
@@ -86,8 +93,8 @@ if __name__ == "__main__":
     video_names = [Info[Info['video_names'][0, :][i]][()].tobytes()[::2].decode() for i in range(len(Info['video_names'][0, :]))]
     scores = Info['scores'][0, :]
     video_format = Info['video_format'][()].tobytes()[::2].decode()
-    width = int(Info['width'][0])
-    height = int(Info['height'][0])
+    width = Info['widths'][0, :]
+    height = Info['heights'][0, :]
 
     for i in range(args.ith, len(video_names)):
         start = time.time()
