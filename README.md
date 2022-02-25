@@ -1,4 +1,5 @@
-# Blindly Assess Quality of In-the-Wild Videos via Quality-aware Pre-training and Motion Perception
+# BVQA-2021
+Blindly Assess Quality of In-the-Wild Videos via Quality-aware Pre-training and Motion Perception
 
 ## Description
 Source code for the following paper:
