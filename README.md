@@ -124,7 +124,7 @@ Should you find this repo useful to your research, we sincerely appreciate it if
 @article{li2021blindly,
   title={Blindly Assess Quality of In-the-Wild Videos via Quality-aware Pre-training and Motion Perception},
   author={Li, Bowen and Zhang, Weixia and Tian, Meng and Zhai, Guangtao and Wang, Xianpei},
-  journal={arXiv preprint arXiv:2108.08505},
-  year={2021}
+  journal={IEEE Transactions on Circuits and Systems for Video Technology},
+  year={2022}
 }
 ```
