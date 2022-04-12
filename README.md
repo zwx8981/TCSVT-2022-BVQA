@@ -1,4 +1,4 @@
-# TCSVT2022-BVQA
+# TCSVT-2022-BVQA
 Blindly Assess Quality of In-the-Wild Videos via Quality-aware Pre-training and Motion Perception
 
 ## Description
