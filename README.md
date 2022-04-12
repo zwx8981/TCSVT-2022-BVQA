@@ -1,4 +1,4 @@
-# BVQA-2021
+# TCSVT2022-BVQA
 Blindly Assess Quality of In-the-Wild Videos via Quality-aware Pre-training and Motion Perception
 
 ## Description
@@ -121,7 +121,7 @@ Great appreciation for their excellent works.
 
 Should you find this repo useful to your research, we sincerely appreciate it if you cite our paper :blush: :
 ```bash
-@article{li2022lindly,
+@article{li2022blindly,
   title={Blindly Assess Quality of In-the-Wild Videos via Quality-aware Pre-training and Motion Perception},
   author={Li, Bowen and Zhang, Weixia and Tian, Meng and Zhai, Guangtao and Wang, Xianpei},
   journal={IEEE Transactions on Circuits and Systems for Video Technology},
