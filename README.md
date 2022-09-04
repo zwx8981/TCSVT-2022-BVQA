@@ -126,7 +126,7 @@ Should you find this repo useful to your research, we sincerely appreciate it if
   author={Li, Bowen and Zhang, Weixia and Tian, Meng and Zhai, Guangtao and Wang, Xianpei},
   journal={IEEE Transactions on Circuits and Systems for Video Technology},
   volume={32},
-  issue={9},
+  number={9},
   pages={5944-5958},
   year={2022}
 }
