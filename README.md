@@ -125,6 +125,9 @@ Should you find this repo useful to your research, we sincerely appreciate it if
   title={Blindly Assess Quality of In-the-Wild Videos via Quality-aware Pre-training and Motion Perception},
   author={Li, Bowen and Zhang, Weixia and Tian, Meng and Zhai, Guangtao and Wang, Xianpei},
   journal={IEEE Transactions on Circuits and Systems for Video Technology},
+  volume={32},
+  issue={9},
+  pages={5944-5958},
   year={2022}
 }
 ```
